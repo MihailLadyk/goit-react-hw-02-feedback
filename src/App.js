@@ -1,77 +1,59 @@
-import { v4 } from "uuid";
-import PropTypes from 'prop-types';
-import Contacts from "./components/Contacts/Contacts";
 import React, { Component } from "react";
-import ContactsCreator from "./components/ContactsCreator/ContactsCreator";
-import Filter from "./components/Filter/Filter";
+import Statistics from "./components/Statistics";
+import FeedbackOptions from "./components/FeedbackOptions";
+import Section from "./components/Section";
+import Notification from "./components/Notification";
 
 export default class App extends Component {
   state = {
-    contacts: [],
-    filter: "",
+    upvotes: 0,
+    neutral: 0,
+    downvotes: 0,
   };
 
-  addContact = (text, number) => {
-    if (this.state.contacts.some((e) => e.text === text) === true) {
-      alert(`${text} is already in contacts`); return  } 
-    const contact = {
-      id: v4(),
-      text: text,
-      number: number,
-    };
+  handleVote = (option) => {
     this.setState((prevState) => {
       return {
-        contacts: [...prevState.contacts, contact],
+        [option]: prevState[option] + 1,
       };
     });
   };
 
-  handleFilter = (e) => {
-    this.setState({
-      filter: e.target.value,
-    });
+  calaculateTotalVotes = () => {
+    return this.state.upvotes + this.state.downvotes + this.state.neutral;
   };
-
-
-  deleteContact = (id) => {
-    this.setState((prevState) => {
-      return {
-        contacts: prevState.contacts.filter((contact) => {
-          if (contact.id === id) {
-            return false;
-          } else {
-            return true;
-          }
-        }),
-      };
-    });
+  countPositiveFeedbackPercentage = () => {
+    return (this.state.upvotes / this.calaculateTotalVotes()) * 100;
   };
-
-
 
   render() {
-    const filteredContacts = this.state.contacts.filter((contact) =>
-      contact.text.toLowerCase().includes(this.state.filter.toLowerCase())
-    );
+    const totalVotes = this.calaculateTotalVotes();
+    const percentage = this.countPositiveFeedbackPercentage();
     return (
       <div>
-        <ContactsCreator addContact={this.addContact} />
-        <Filter Filter={this.handleFilter} />
-        <h2>Contacts</h2>
-        <Contacts contact={filteredContacts} deleteContact={this.deleteContact}/>
+        <Section title="Please leave feedback">
+          <FeedbackOptions
+            options={["upvotes", "downvotes", "neutral"]}
+            onVote={this.handleVote}
+          />
+        </Section>
+
+        <Section title="Statistics">
+          {totalVotes > 0 ? (
+            <Statistics
+              upvotes={this.state.upvotes}
+              downvotes={this.state.downvotes}
+              neutral={this.state.neutral}
+              total={totalVotes}
+              percentage={percentage}
+            />
+          ) : (
+            <Notification message="No feedback given" />
+          )}
+        </Section>
+
+        <hr />
       </div>
     );
   }
 }
-ContactsCreator.propTypes = {
-addContact: PropTypes.func
-}
-
-Filter.propTypes = {
-Filter: PropTypes.func
-  }
-
-  Contacts.propTypes = {
-   contact: PropTypes.array,
-   deleteContact: PropTypes.func
-      }

@@ -12,3 +12,7 @@ export default function VoteOptions(props) {
     </div>
   );
 }
+// static propTypes = {
+//  options: PropTypes.array,
+//  onVote: PropTypes.func
+// }

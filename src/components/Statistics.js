@@ -11,3 +11,10 @@ export default function Statistics(props) {
     </div>
   );
 }
+//  static propTypes = {
+//  upvotes: PropTypes.number,
+//  downvotes: PropTypes.number,
+//  neutral: PropTypes.number,
+//  total: PropTypes.number,
+//  percentage: PropTypes.number
+// }

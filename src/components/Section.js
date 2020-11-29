@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from 'prop-types';
 
 export default function Section(props) {
   return (
@@ -9,6 +10,6 @@ export default function Section(props) {
     </div>
   );
 }
-// static propTypes = {
-//   title: PropTypes.string
-// }
+Section.propTypes = {
+  title: PropTypes.string.isRequired
+}

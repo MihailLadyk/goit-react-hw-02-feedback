@@ -1,7 +1,8 @@
 import React from "react";
 import { v4 } from "uuid";
+import PropTypes from 'prop-types';
 
-export default function VoteOptions(props) {
+export default function FeedbackOptions(props) {
   return (
     <div>
       {props.options.map((elem) => (
@@ -12,7 +13,7 @@ export default function VoteOptions(props) {
     </div>
   );
 }
-// static propTypes = {
-//  options: PropTypes.array,
-//  onVote: PropTypes.func
-// }
+FeedbackOptions.propTypes = {
+ options: PropTypes.array.isRequired,
+ onVote: PropTypes.func.isRequired
+}

@@ -1,4 +1,6 @@
 import React from "react";
+import PropTypes from 'prop-types';
+
 
 export default function Statistics(props) {
   return (
@@ -11,10 +13,11 @@ export default function Statistics(props) {
     </div>
   );
 }
-//  static propTypes = {
-//  upvotes: PropTypes.number,
-//  downvotes: PropTypes.number,
-//  neutral: PropTypes.number,
-//  total: PropTypes.number,
-//  percentage: PropTypes.number
-// }
+
+Statistics.propTypes = {
+ upvotes: PropTypes.number,
+ downvotes: PropTypes.number,
+ neutral: PropTypes.number,
+ total: PropTypes.number,
+ percentage: PropTypes.number
+}

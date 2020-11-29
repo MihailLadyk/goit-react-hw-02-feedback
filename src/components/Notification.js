@@ -9,6 +9,6 @@ export default function Notification(props) {
         </div>
     )
 }
-// static propTypes = {
-//     message: PropTypes.string
-//   }
+Notification.propTypes = {
+    message: PropTypes.string
+  }
